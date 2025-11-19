@@ -2,8 +2,8 @@
 name: Delete Old Workflow Runs
 
 on:
- schedule:
-   - cron: "0 0 * * *" # Runs daily at midnight UTC
+  schedule:
+    - cron: "0 0 * * *" # Runs daily at midnight UTC
 
 permissions:
   actions: write
