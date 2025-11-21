@@ -24,5 +24,8 @@ resource "aws_lambda_function" "lotochecker_function" {
       SNS_TOPIC_ARN = var.sns_arn
     }
   }
+  dead_letter_config {
+    target_arn = var.sns_arn
+  }
   tags = local.tags
 }
