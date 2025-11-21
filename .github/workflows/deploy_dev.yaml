@@ -15,6 +15,7 @@ on:
       - main
     paths:
       - terraform/**
+      - lambda/**
 
 env:
   AWS_REGION: "eu-west-1"
