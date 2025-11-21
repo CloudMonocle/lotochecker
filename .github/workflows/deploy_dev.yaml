@@ -16,7 +16,6 @@ on:
     paths:
       - terraform/**
 
-
 env:
   AWS_REGION: "eu-west-1"
 
@@ -59,7 +58,6 @@ jobs:
           TF_VAR_AWS_ACCOUNT_ID: ${{ vars.DEPLOY_AWS_ACCOUNT_ID }}
           TF_VAR_AWS_ROLE_NAME: ${{ vars.DEPLOY_AWS_ROLE }}
           TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
-
 
         shell: sh
         run: |
@@ -143,4 +141,3 @@ jobs:
         run: |
           terraform apply -var-file=config/development/terraform.tfvars --auto-approve
         working-directory: terraform
-
