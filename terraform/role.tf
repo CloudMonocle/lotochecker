@@ -12,20 +12,20 @@ resource "aws_iam_role" "lambda_role" {
   })
 }
 
-# resource "aws_iam_role_policy" "lambda-pol-sns" {
-#   name = "${lookup(local.resource_prefix_map, "iam-policy", "${local.region_alias}")}-sns"
-#   role = aws_iam_role.lambda_role.id
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Effect = "Allow",
-#         Action = "sns:Publish",
-#         Resource = var.sns_arn
-#       }
-#     ]
-#   })
-# }
+resource "aws_iam_role_policy" "lambda-pol-sns" {
+  name = "${lookup(local.resource_prefix_map, "iam-policy", local.region_alias)}-sns"
+  role = aws_iam_role.lambda_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = "sns:Publish",
+        Resource = var.sns_arn
+      }
+    ]
+  })
+}
 
 
 # Basic Lambda execution policy (logs)
