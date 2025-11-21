@@ -16,6 +16,10 @@ on:
     paths:
       - terraform/**
 
+
+env:
+  AWS_REGION: "eu-west-1"
+
 defaults:
   run:
     shell: bash
@@ -45,7 +49,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ vars.MAIN_AWS_ACCOUNT_ID }}:role/${{ vars.MAIN_AWS_ROLE }}
           role-session-name: ${{ github.sha }}
-          aws-region: "eu-west-1"
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -105,7 +109,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ vars.MAIN_AWS_ACCOUNT_ID }}:role/${{ vars.MAIN_AWS_ROLE }}
           role-session-name: ${{ github.sha }}
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: install terraform
         uses: hashicorp/setup-terraform@v3
