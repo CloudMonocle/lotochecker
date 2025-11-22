@@ -15,6 +15,10 @@ on:
       - main
     paths:
       - terraform/**
+      - lambda/**
+
+env:
+  AWS_REGION: "eu-west-1"
 
 defaults:
   run:
@@ -22,6 +26,32 @@ defaults:
     working-directory: terraform
 
 jobs:
+  pytest_lambda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version: 3.x # Use any supported Python version
+
+      - name: Intsall Pandas
+        shell: sh
+        run: |
+          pip install pandas boto3 requests pytest pytest-md pytest-emoji
+
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          verbose: true
+          emoji: true
+          job-summary: true
+          custom-arguments: '-v'
+          click-to-expand: true
+          report-title: 'Test Report'
+
   terraform_plan:
     concurrency:
       group: terraform-plan
@@ -45,7 +75,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ vars.MAIN_AWS_ACCOUNT_ID }}:role/${{ vars.MAIN_AWS_ROLE }}
           role-session-name: ${{ github.sha }}
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -104,7 +134,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ vars.MAIN_AWS_ACCOUNT_ID }}:role/${{ vars.MAIN_AWS_ROLE }}
           role-session-name: ${{ github.sha }}
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: install terraform
         uses: hashicorp/setup-terraform@v3

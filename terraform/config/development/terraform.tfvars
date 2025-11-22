@@ -1,0 +1,4 @@
+environment    = "development"
+aws_account_id = "711387118193"
+aws_role_name  = "iam-rol-github-ReadWrite"
+sns_arn        = "arn:aws:sns:eu-west-1:519388350760:awssetup-dub-sns-orgalerts"
