@@ -26,6 +26,32 @@ defaults:
     working-directory: terraform
 
 jobs:
+  pytest_lambda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version: 3.x # Use any supported Python version
+
+      - name: Intsall Pandas
+        shell: sh
+        run: |
+          pip install pandas boto3 requests pytest pytest-md pytest-emoji
+
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          verbose: true
+          emoji: true
+          job-summary: true
+          custom-arguments: '-v'
+          click-to-expand: true
+          report-title: 'Test Report'
+
   terraform_plan:
     concurrency:
       group: terraform-plan
