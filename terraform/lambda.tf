@@ -22,6 +22,7 @@ resource "aws_lambda_function" "lotochecker_function" {
   environment {
     variables = {
       SNS_TOPIC_ARN = var.sns_arn
+      NUMBERS_JSON  = var.check_numbers_file
     }
   }
   dead_letter_config {

@@ -1,7 +1,7 @@
 # Project Name
 
 [![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey.svg)](LICENSE)
-[![Build Status](https://img.shields.io/github/workflow/status/CloudMonocle/REPO/CI)](https://github.com/CloudMonocle/REPO/actions)
+[![Build Status](https://img.shields.io/github/workflow/status/CloudMonocle/lotochecker/CI)](https://github.com/CloudMonocle/lotochecker/actions)
 
 ## 🚀 Overview
 
@@ -17,10 +17,10 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/CloudMonocle/REPO.git
+git clone https://github.com/CloudMonocle/lotochecker.git
 
 # Go into the repository
-cd REPO
+cd lotochecker
 
 # Install dependencies (edit as needed)
 <INstall Notes>
