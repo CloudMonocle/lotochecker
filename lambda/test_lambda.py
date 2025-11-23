@@ -44,3 +44,16 @@ def test_format_sns_message():
     assert "Bonus Ball: 7" in sns_msg
     assert "Matched: 12, 23, 34" in sns_msg
     assert "Bonus Match: Yes" in sns_msg
+
+
+def test_sns_message():
+    """Test the aws_send_sns_message function."""
+    sns_msg = "Test Loto Message"
+    try:
+        main.aws_send_sns_message(
+            sns_msg,
+            sns_topic_arn="arn:aws:sns:eu-west-1:519388350760:awssetup-dub-sns-orgalerts",
+            aws_region="eu-west-1",
+        )
+    except Exception as e:  # pylint: disable=W0718
+        assert False, f"aws_send_sns_message raised an exception: {e}"

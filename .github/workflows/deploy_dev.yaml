@@ -28,6 +28,8 @@ defaults:
 jobs:
   pytest_lambda:
     runs-on: ubuntu-latest
+    environment:
+      name: development-plan
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -36,6 +38,13 @@ jobs:
         uses: actions/setup-python@v5.4.0
         with:
           python-version: 3.x # Use any supported Python version
+
+      - name: AWS login main account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.MAIN_AWS_ACCOUNT_ID }}:role/${{ vars.MAIN_AWS_ROLE }}
+          role-session-name: ${{ github.sha }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Intsall Pandas
         shell: sh

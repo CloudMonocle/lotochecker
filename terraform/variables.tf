@@ -22,3 +22,9 @@ variable "check_numbers_file" {
   description = "Path to the JSON file containing the numbers to check"
   default     = "loto_numers.json.example"
 }
+
+variable "discord_channel" {
+  type        = string
+  description = "Discord channel to send notifications to"
+  default     = ""
+}

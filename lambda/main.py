@@ -49,7 +49,9 @@ def format_sns_message(msgdata):
     return sns_msg
 
 
-def aws_send_sns_message(sns_msg, sns_topic_arn, aws_region):
+def aws_send_sns_message(
+    sns_msg, sns_topic_arn, aws_region, discord_channel="testingstuff"
+):
     """Send SNS message using boto3."""
     sns = boto3.client(
         "sns",
@@ -60,7 +62,7 @@ def aws_send_sns_message(sns_msg, sns_topic_arn, aws_region):
         Subject="Loto RESULTs",
         Message=sns_msg,
         MessageAttributes={
-            "discord_channel": {"DataType": "String", "StringValue": "daily-stuff"},
+            "discord_channel": {"DataType": "String", "StringValue": discord_channel},
         },
     )
 
@@ -90,18 +92,19 @@ def lambda_handler(event, context):  # pylint: disable=W0613
                         check_numbers=lnumb,
                     )
                 )
-    if os.environ.get("SNS_TOPIC_ARN", None) is None:
-        print("No sns ARN found")
+    sns_topic = os.environ.get("SNS_TOPIC_ARN", None)
+    discord_channel = os.environ.get("DISCORD_CHANNEL")
+    if (sns_topic is None or sns_topic == "") or (
+        os.environ.get("DISCORD_CHANNEL", None) is None or discord_channel == ""
+    ):
+        print("No sns ARN found or no discord channel, returning results only")
         return {"statusCode": 200, "body": json.dumps(loto_results)}
     # sedn the message
     print(format_sns_message(loto_results))
     aws_send_sns_message(
+        discord_channel=discord_channel,
         sns_msg=format_sns_message(loto_results),
-        sns_topic_arn=os.environ.get("SNS_TOPIC_ARN"),
+        sns_topic_arn=sns_topic,
         aws_region=os.environ.get("AWS_REGION", boto3.session.Session().region_name),
     )
-    return {
-        "statusCode": 200,
-        "sns_status": "pending",
-        "body": json.dumps(loto_results),
-    }
+    return {"statusCode": 200}
