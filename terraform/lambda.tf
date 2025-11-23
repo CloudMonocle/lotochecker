@@ -3,8 +3,8 @@ data "archive_file" "lambda_zip" {
   type       = "zip"
   source_dir = "../lambda"
   excludes = [
-    "../lambda/*.example",
-    "../lambda/test_*.py",
+    "*.example",
+    "test_*.py",
   ]
   output_path = "/tmp/lambda.zip"
 }
