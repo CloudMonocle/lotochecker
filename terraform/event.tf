@@ -2,6 +2,7 @@ resource "aws_cloudwatch_event_rule" "lotochecker_schedule" {
   name                = "${lookup(local.resource_prefix_map, "event", local.region_alias)}rule-schedule"
   description         = "Triggers the LotoChecker Lambda function every Saturday at 11 PM UTC"
   schedule_expression = "cron(0 23 ? * SAT *)"
+  state               = var.environment == "production" ? "ENABLED" : "DISABLED"
 }
 
 resource "aws_cloudwatch_event_target" "lotochecker_target" {
