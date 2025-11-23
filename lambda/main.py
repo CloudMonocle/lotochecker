@@ -38,7 +38,7 @@ def format_sns_message(msgdata):
     sns_msg += f"Bonus Ball: {msgdata['bonus ball']}\n"
     sns_msg += "Check Results:\n"
     for check in msgdata["checks"]:
-        if check["matchcount"] > 0:
+        if check["matchcount"] > 1:
             sns_msg += (
                 f" - Numbers: {', '.join(str(n) for n in check['checkednumbers'])}"
             )
