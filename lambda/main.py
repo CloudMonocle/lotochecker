@@ -40,12 +40,16 @@ def format_sns_message(msgdata):
     for check in msgdata["checks"]:
         if check["matchcount"] > 1:
             sns_msg += (
-                f" - Numbers: {', '.join(str(n) for n in check['checkednumbers'])}"
+                f" - Numbers: {', '.join(str(n) for n in check['checkednumbers'])}\n"
             )
             sns_msg += (
-                f" | Matched: {', '.join(str(n) for n in check['matchednumbers'])}"
+                f" \t Matched: {', '.join(str(n) for n in check['matchednumbers'])}\n"
             )
-            sns_msg += f" | Bonus Match: {'Yes' if check['bonusmatch'] else 'No'}\n"
+            sns_msg += f" \t Bonus Match: {'Yes' if check['bonusmatch'] else 'No'}"
+            if check["matchcount"] == 2:
+                sns_msg += " (Lucky Dip Win!)\n"
+            # will add moew when knowing
+            sns_msg += "\n"
     return sns_msg
 
 
