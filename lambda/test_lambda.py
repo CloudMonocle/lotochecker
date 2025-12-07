@@ -57,12 +57,13 @@ def test_sns_message():
                 {
                     "checkednumbers": [3, 12, 23, 34, 50, 7],
                     "matchednumbers": [12, 23],
-                    "matchcount": 3,
-                    "bonusmatch": True,
+                    "matchcount": 2,
+                    "bonusmatch": False,
                 }
             ],
         }
         sns_msg = main.format_sns_message(msgdata)
+        print(sns_msg)
         main.aws_send_sns_message(
             sns_msg,
             sns_topic_arn="arn:aws:sns:eu-west-1:519388350760:awssetup-dub-sns-orgalerts",
