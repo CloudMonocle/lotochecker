@@ -6,7 +6,7 @@ provider "aws" {
   }
   default_tags {
     tags = {
-      project     = "lotochecker"
+      project     = local.project_name
       environment = var.environment
     }
   }
