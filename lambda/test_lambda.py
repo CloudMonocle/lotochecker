@@ -48,8 +48,21 @@ def test_format_sns_message():
 
 def test_sns_message():
     """Test the aws_send_sns_message function."""
-    sns_msg = "Test Loto Message"
     try:
+        msgdata = {
+            "drawdate": "2024-06-01",
+            "numbers": [5, 12, 23, 34, 45, 56],
+            "bonus ball": 7,
+            "checks": [
+                {
+                    "checkednumbers": [3, 12, 23, 34, 50, 7],
+                    "matchednumbers": [12, 23],
+                    "matchcount": 3,
+                    "bonusmatch": True,
+                }
+            ],
+        }
+        sns_msg = main.format_sns_message(msgdata)
         main.aws_send_sns_message(
             sns_msg,
             sns_topic_arn="arn:aws:sns:eu-west-1:519388350760:awssetup-dub-sns-orgalerts",
