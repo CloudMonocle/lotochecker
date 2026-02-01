@@ -178,7 +178,7 @@ jobs:
           terraform apply -var-file=config/development/terraform.tfvars --auto-approve
         working-directory: terraform
 
-  Trigger_lambda_test:
+  trigger_lambda_test:
     runs-on: ubuntu-latest
     needs: terraform_deploy
     environment:
@@ -188,6 +188,13 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::${{ vars.MAIN_AWS_ACCOUNT_ID }}:role/${{ vars.MAIN_AWS_ROLE }}
+          role-session-name: ${{ github.sha }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Switch to Deploy Account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.DEPLOY_AWS_ACCOUNT_ID }}:role/${{ vars.DEPLOY_AWS_ROLE }}
           role-session-name: ${{ github.sha }}
           aws-region: ${{ env.AWS_REGION }}
 
