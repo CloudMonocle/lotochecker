@@ -46,6 +46,11 @@ jobs:
           role-session-name: ${{ github.sha }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Install dependencies
+        shell: sh
+        run: |
+          pip install boto3 requests pytest pytest-md pytest-emoji
+
       - name: Run pytest
         uses: pavelzw/pytest-action@v2
         with:
