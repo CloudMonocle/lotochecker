@@ -67,8 +67,7 @@ def aws_send_sns_message(
 
 def lambda_handler(event, context):  # pylint: disable=W0613
     """Lambda handler function."""
-    loto_data = fetch_loto_numbers("31-01-2026")
-    # loto_data = fetch_loto_numbers(datetime.today().strftime('%d-%m-%Y'))
+    loto_data = fetch_loto_numbers(datetime.today().strftime("%d-%m-%Y"))
     loto_results = []
 
     if os.environ.get("NUMBERS_JSON", None) is None:
