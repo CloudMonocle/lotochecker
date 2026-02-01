@@ -19,7 +19,7 @@ resource "aws_lambda_function" "lotochecker_function" {
   timeout          = 30
   layers = [
     "arn:aws:lambda:${data.aws_region.current.name}:336392948345:layer:AWSSDKPandas-Python311:24",
-    "arn:aws:lambda:${data.aws_region.current.name}:519388350760:layer:awssetup-dub-lambda-layer-requests:1",
+    "arn:aws:lambda:${data.aws_region.current.name}:519388350760:layer:awssetup-dub-lambda-layer-requests:2",
   ]
   environment {
     variables = {
