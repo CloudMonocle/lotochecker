@@ -1,6 +1,21 @@
 """Unit tests for lambda/main.py."""
 
 import main
+import requests
+
+
+def test_url_fetch_loto_numbers():
+    """Test fetching loto numbers from the URL."""
+    url = "https://api-dfe.national-lottery.co.uk/draw-game/results/1"
+    response = requests.get(url, timeout=10)
+    assert response.status_code == 200
+    data = response.json().get("drawResults", [])
+    assert isinstance(data, list)
+    assert len(data) > 0
+    draw = data[0]
+    assert "drawDate" in draw
+    assert "primaryNumbers" in draw.get("drawnNumbers").get("drawnNumbers")
+    assert "secondaryNumbers" in draw.get("drawnNumbers").get("drawnNumbers")
 
 
 def test_check_loto_numbers():
