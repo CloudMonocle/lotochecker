@@ -13,7 +13,7 @@ An fun little project for me to, send notifications to my AWS SNS (Simple Notifc
 
 ## 🛠️ Features
 
-- Returning Data from the lottry website
+- Returning Data from the lottry site
 - Checking Numbers
 - Sending to my AWS SNS service (created else where)
 
