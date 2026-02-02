@@ -49,7 +49,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.4.0
         with:
-          python-version: "3.10" # Use any supported Python version
+          python-version: "3.13" # Use any supported Python version
 
       - name: Checkout
         uses: actions/checkout@v4.2.2
