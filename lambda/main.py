@@ -29,7 +29,7 @@ def fetch_loto_numbers(today_date):
                 "bonusnumber": dawn_numbers.get("secondaryNumbers")[0],
             }
     logger.warning("No draw found for date: %s", {today_date})
-    return None
+    raise KeyError("No draw found for the given date")
 
 
 def check_loto_numbers(loto_numbers, loto_bonus, check_numbers):
@@ -69,7 +69,6 @@ def lambda_handler(event, context):  # pylint: disable=W0613
     """Lambda handler function."""
     loto_data = fetch_loto_numbers(datetime.today().strftime("%d-%m-%Y"))
     loto_results = []
-
     if os.environ.get("NUMBERS_JSON", None) is None:
         logger.warning("Missing json environment variable using test example data")
 
