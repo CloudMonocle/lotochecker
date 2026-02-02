@@ -22,3 +22,5 @@ repos:
       - id: mypy
       - id: isort
       - id: bandit
+      #Spell checkers
+#      - id: codespell
