@@ -209,4 +209,3 @@ jobs:
   #       run: |
   #         aws lambda invoke --function-name loto-checker-dev-lotoCheckerFunction response.json
   #         cat response.json
-
