@@ -28,9 +28,6 @@ defaults:
 
 jobs:
   destroy_dev_environment:
-    concurrency:
-      group: terraform-deploy
-      cancel-in-progress: false
     runs-on: ubuntu-latest
     environment:
       name: development-deploy
@@ -76,9 +73,6 @@ jobs:
         working-directory: terraform
 
   deploy_prod_environment:
-    concurrency:
-      group: terraform-deploy
-      cancel-in-progress: false
     runs-on: ubuntu-latest
     needs: destroy_dev_environment
     environment:
