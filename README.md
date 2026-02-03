@@ -5,7 +5,7 @@
 
 ## 🚀 Overview
 
-An fun little project for me to, send notifications to my AWS SNS (Simple Notifcation Service) wiht the winning nummbers from the Lottory but then compare them to my numners stored in an Json file, to check if i have any winning numbers.
+An fun little project for me to, send notifications to my AWS SNS (Simple Notifcation Service) with the winning nummbers from the Lottory but then compare them to my numners stored in an SSM pramater.
 
 ### YouTube Video
 
