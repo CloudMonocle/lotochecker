@@ -1,5 +1,5 @@
 ---
-name: Terraform Deploy(prod)
+name: Destroy Dev Environment
 permissions:
   id-token: write
   contents: read
@@ -17,6 +17,7 @@ on:
       - terraform/**
       - lambda/**
       - .github/workflows/deploy_prod.yaml
+      - .github/workflows/destroy_dev.yaml
 
 env:
   AWS_REGION: "eu-west-1"
@@ -27,10 +28,10 @@ defaults:
     working-directory: terraform
 
 jobs:
-  deploy_prod_environment:
+  destroy_dev_environment:
     runs-on: ubuntu-latest
     environment:
-      name: production-deploy
+      name: development-deploy
     steps:
       - name: AWS login main account
         uses: aws-actions/configure-aws-credentials@v4
@@ -47,7 +48,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5.4.0
         with:
-          python-version: "3.10" # Use any supported Python version
+          python-version: "3.13" # Use any supported Python version
 
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -59,15 +60,15 @@ jobs:
           TF_VAR_aws_role_name: ${{ vars.DEPLOY_AWS_ROLE }}
           TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          terraform init -input=false -no-color -upgrade -reconfigure -backend-config=config/production/backend.conf -var-file=config/production/terraform.tfvars
+          terraform init -input=false -no-color -upgrade -reconfigure -backend-config=config/development/backend.conf -var-file=config/development/terraform.tfvars
         working-directory: terraform
 
-      - name: Terraform apply
+      - name: Terraform destroy
         shell: sh
         env:
           TF_VAR_aws_account_id: ${{ vars.DEPLOY_AWS_ACCOUNT_ID }}
           TF_VAR_aws_role_name: ${{ vars.DEPLOY_AWS_ROLE }}
           TF_VAR_github_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          terraform apply -var-file=config/production/terraform.tfvars --auto-approve
+          terraform destroy -var-file=config/development/terraform.tfvars --auto-approve
         working-directory: terraform
