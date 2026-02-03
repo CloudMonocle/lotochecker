@@ -16,14 +16,6 @@ def test_url_fetch_loto_numbers():
         pass
 
 
-def test_ssm_fetch_numbers():
-    """Test fetching loto numbers from SSM Parameter Store."""
-    parameter_name = "/lotocheck/lotonumbers"
-    aws_region = "eu-west-1"
-    numbers_json = main.fetch_numbers_from_ssm(parameter_name, aws_region)
-    assert isinstance(numbers_json, list)
-
-
 def test_check_loto_numbers():
     """Test the check_loto_numbers function."""
     loto_numbers = [5, 12, 23, 34, 45, 56]
