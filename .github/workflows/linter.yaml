@@ -36,7 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_JSCPD: false
           VALIDATE_CHECKOV: false
-          VALIDATE_GITHUB_ACTIONS_ZIZMOROR: false
+          VALIDATE_GITHUB_ACTIONS_ZIZMOR: false
           VALIDATE_PYTHON_RUFF_FORMAT: false
           VALIDATE_TRIVY: false
           VALIDATE_SPELL_CODESPELL: false
