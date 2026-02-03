@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: git@github.com:CloudMonocle/pre-commit-checks.git
-    rev: fe6a4e0860f6d72bee3d2a4be2deafb4c9eee735
+    rev: 463bbedd8ae2bcbf8dbeb545867437ccb06e4d93
     hooks:
       #Code checks
       - id: check-added-large-files
@@ -22,3 +22,5 @@ repos:
       - id: mypy
       - id: isort
       - id: bandit
+      #Spell checkers
+#      - id: codespell

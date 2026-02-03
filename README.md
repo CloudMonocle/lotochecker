@@ -1,40 +1,30 @@
-# Project Name
+# Loto Checker
 
 [![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey.svg)](LICENSE)
-[![Build Status](https://img.shields.io/github/workflow/status/CloudMonocle/REPO/CI)](https://github.com/CloudMonocle/REPO/actions)
+[![Build Status](https://img.shields.io/github/workflow/status/CloudMonocle/lotochecker/CI)](https://github.com/CloudMonocle/lotochecker/actions)
 
 ## 🚀 Overview
 
-<A brief description of what your project does, its purpose, and key features.>
+An fun little project for me to, send notifications to my AWS SNS (Simple Notifcation Service) with the winning nummbers from the Lottory but then compare them to my numners stored in an SSM pramater.
+
+### YouTube Video
+
+!!!Linkt to Video !!!
 
 ## 🛠️ Features
 
-- Feature 1
-- Feature 2
-- Feature 3
+- Returning Data from the lottry site
+- Checking Numbers
+- Sending to my AWS SNS service (created else where)
 
 ## 📦 Installation
 
-```bash
-# Clone the repository
-git clone https://github.com/CloudMonocle/REPO.git
+Deployed using Terrform envirouments, but is setup to run in my enviroument, so you need to update/disable the backend and update the terraform.tfvars
 
-# Go into the repository
-cd REPO
-
-# Install dependencies (edit as needed)
-<INstall Notes>
-```
-
-## 🚀 Usage
-
-```bash
-<usage info>
-```
-
-## 📄 Documentation
-
-- <list of docs>
+- Create an sns topic and secription
+- cd to terraform
+- terraform init -backend-config=config/**enviroument**/backend.conf
+- terraform paln/apply -backend-config=config/**enviroument**/terraform.tfvars
 
 ## 📝 License
 
