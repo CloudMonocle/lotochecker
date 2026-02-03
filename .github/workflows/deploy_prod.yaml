@@ -30,7 +30,7 @@ jobs:
   destroy_dev_environment:
     runs-on: ubuntu-latest
     environment:
-      name: development-deploy
+      name: production-deploy
     steps:
       - name: AWS login main account
         uses: aws-actions/configure-aws-credentials@v4
