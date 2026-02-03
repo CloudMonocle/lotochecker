@@ -124,7 +124,7 @@ jobs:
 
       - name: Checkov
         id: checkov
-        uses: ghostfacts/checkov@main
+        uses: CloudMonocle/checkov@main
         with:
           planfilename: plan.json
           path: terraform
