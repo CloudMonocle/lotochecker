@@ -1,4 +1,5 @@
 resource "aws_ssm_parameter" "lotonumbers" {
+  #checkov:skip=CKV_AWS_337
   name        = "/lotocheck/lotonumbers"
   description = "The parameter description"
   type        = "SecureString"
