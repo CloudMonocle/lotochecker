@@ -62,7 +62,7 @@ jobs:
           click-to-expand: true
           report-title: "Test Report"
 
-  terraform_plan:
+  terraform_checks:
     concurrency:
       group: terraform-plan
       cancel-in-progress: false
@@ -111,7 +111,7 @@ jobs:
 
       - name: Terraform Plan/Show
         if: github.event_name == 'pull_request'
-        id: terraform_plan
+        id: terraform_checks
         shell: sh
         run: |
           terraform plan -refresh=true -out=plan.out -var-file=config/development/terraform.tfvars
@@ -135,7 +135,9 @@ jobs:
       group: terraform-deploy
       cancel-in-progress: false
     runs-on: ubuntu-latest
-    needs: terraform_plan
+    needs:
+      - terraform_checks
+      - pytest_lambda
     environment:
       name: development-deploy
     steps:
@@ -207,3 +209,4 @@ jobs:
   #       run: |
   #         aws lambda invoke --function-name loto-checker-dev-lotoCheckerFunction response.json
   #         cat response.json
+
