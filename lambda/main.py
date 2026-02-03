@@ -47,6 +47,24 @@ def check_loto_numbers(loto_numbers, loto_bonus, check_numbers):
     }
 
 
+def fetch_numbers_from_ssm(parameter_name, aws_region):
+    """Retrieve Loto numbers JSON from SSM Parameter Store."""
+    ssm = boto3.client("ssm", region_name=aws_region)
+    try:
+        response = ssm.get_parameter(Name=parameter_name, WithDecryption=True)
+        numbers_json = json.loads(response["Parameter"]["Value"])
+        logger.info(
+            "Successfully retrieved numbers from SSM parameter: %s", parameter_name
+        )
+        return numbers_json
+    except ssm.exceptions.ParameterNotFound:
+        logger.error("SSM parameter not found: %s", parameter_name)
+        raise
+    except json.JSONDecodeError as e:
+        logger.error("Failed to parse JSON from SSM parameter: %s", str(e))
+        raise
+
+
 def aws_send_sns_message(
     sns_msg, sns_topic_arn, aws_region, discord_channel="testingstuff"
 ):
@@ -69,12 +87,15 @@ def lambda_handler(event, context):  # pylint: disable=W0613
     """Lambda handler function."""
     loto_data = fetch_loto_numbers(datetime.today().strftime("%d-%m-%Y"))
     loto_results = []
-    if os.environ.get("NUMBERS_JSON", None) is None:
-        logger.warning("Missing json environment variable using test example data")
 
-    json_path = os.environ.get("NUMBERS_JSON", "loto_numers.json.example")
-    with open(json_path, "r", encoding="utf-8") as f:
-        stored_numbers = json.load(f)
+    aws_region = os.environ.get("AWS_REGION", boto3.session.Session().region_name)
+    ssm_parameter_name = os.environ.get("SSM_PARAMETER_NAME", "/lotocheck/lotonumbers")
+
+    try:
+        stored_numbers = fetch_numbers_from_ssm(ssm_parameter_name, aws_region)
+    except Exception as e:
+        logger.error("Failed to retrieve numbers from SSM: %s", str(e))
+        raise
     for entry in stored_numbers:
         results = check_loto_numbers(
             loto_numbers=loto_data["mainnumbers"],
@@ -127,8 +148,3 @@ def lambda_handler(event, context):  # pylint: disable=W0613
         aws_region=os.environ.get("AWS_REGION", boto3.session.Session().region_name),
     )
     return {"statusCode": 200}
-
-
-# # For testing locally
-# if __name__ == "__main__":
-#     lambda_handler(None, None)

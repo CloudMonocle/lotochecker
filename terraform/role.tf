@@ -47,3 +47,22 @@ resource "aws_iam_role_policy" "lambda_logs_policy" {
     ]
   })
 }
+
+resource "aws_iam_role_policy" "lambda-pol-ssm" {
+  name = "${lookup(local.resource_prefix_map, "iam-policy", local.region_alias)}-ssm"
+  role = aws_iam_role.lambda_role.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        "Sid" : "AllowGetSecureStringParameter",
+        "Effect" : "Allow",
+        "Action" : [
+          "ssm:GetParameter",
+          "ssm:GetParameters"
+        ],
+        "Resource" : aws_ssm_parameter.lotonumbers.arn
+      }
+    ]
+  })
+}
