@@ -16,6 +16,7 @@ on:
     paths:
       - terraform/**
       - lambda/**
+      - .github/workflows/deploy_dev.yaml
 
 env:
   AWS_REGION: "eu-west-1"
