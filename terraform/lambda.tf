@@ -24,7 +24,6 @@ resource "aws_lambda_function" "lotochecker_function" {
     variables = {
       SNS_TOPIC_ARN   = var.sns_arn
       DISCORD_CHANNEL = var.discord_channel
-      NUMBERS_JSON    = var.check_numbers_file
     }
   }
   dead_letter_config {
