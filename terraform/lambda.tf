@@ -12,7 +12,7 @@ locals {
   lambda_env_vars = var.environment == "development" ? {
     SNS_TOPIC_ARN   = var.sns_arn
     DISCORD_CHANNEL = var.discord_channel
-    DATE_TO_USE     = "7-02-2026"
+    DATE_TO_USE     = "07-02-2026"
     } : {
     SNS_TOPIC_ARN   = var.sns_arn
     DISCORD_CHANNEL = var.discord_channel
