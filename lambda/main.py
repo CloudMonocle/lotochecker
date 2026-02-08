@@ -17,11 +17,13 @@ def fetch_loto_numbers(today_date):
     url = "https://api-dfe.national-lottery.co.uk/draw-game/results/1"
     response = requests.get(url, timeout=10)
     json_data = response.json().get("drawResults", [])
+    logger.info("Fetched Loto numbers from API for date: %s", today_date)
     for draw in json_data:
         drawdate = datetime.strptime(
             draw.get("drawDate"), "%Y-%m-%dT%H:%M:%S.%fZ"
         ).strftime("%d-%m-%Y")
         if drawdate == today_date:
+            logger.info("Found draw for date: %s", today_date)
             dawn_numbers = draw.get("drawnNumbers").get("drawnNumbers")
             return {
                 "drawdate": drawdate,
@@ -85,7 +87,8 @@ def aws_send_sns_message(
 
 def lambda_handler(event, context):  # pylint: disable=W0613
     """Lambda handler function."""
-    loto_data = fetch_loto_numbers(datetime.today().strftime("%d-%m-%Y"))
+    datetouse = os.environ.get("DATE_TO_USE", datetime.today().strftime("%d-%m-%Y"))
+    loto_data = fetch_loto_numbers(datetouse)
     loto_results = []
 
     aws_region = os.environ.get("AWS_REGION", boto3.session.Session().region_name)

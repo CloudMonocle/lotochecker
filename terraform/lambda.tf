@@ -8,6 +8,17 @@ data "archive_file" "lambda_zip" {
   output_path = "/tmp/lambda.zip"
 }
 
+locals {
+  lambda_env_vars = var.environment == "development" ? {
+    SNS_TOPIC_ARN   = var.sns_arn
+    DISCORD_CHANNEL = var.discord_channel
+    DATE_TO_USE     = "7-02-2026"
+    } : {
+    SNS_TOPIC_ARN   = var.sns_arn
+    DISCORD_CHANNEL = var.discord_channel
+  }
+}
+
 # Lambda Function
 resource "aws_lambda_function" "lotochecker_function" {
   function_name    = "${lookup(local.resource_prefix_map, "lambda-function", local.region_alias)}-checker"
@@ -18,14 +29,10 @@ resource "aws_lambda_function" "lotochecker_function" {
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   timeout          = 30
   layers = [
-    "arn:aws:lambda:${data.aws_region.current.name}:519388350760:layer:awssetup-dub-lambda-layer-requests:2",
+    "arn:aws:lambda:${data.aws_region.current.name}:519388350760:layer:awsenv-dub-lambda-layer-requests:1",
   ]
   environment {
-    variables = {
-      SNS_TOPIC_ARN   = var.sns_arn
-      DISCORD_CHANNEL = var.discord_channel
-      NUMBERS_JSON    = var.check_numbers_file
-    }
+    variables = local.lambda_env_vars
   }
   dead_letter_config {
     target_arn = var.sns_arn

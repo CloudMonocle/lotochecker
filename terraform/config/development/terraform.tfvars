@@ -1,3 +1,3 @@
 environment     = "development"
-sns_arn         = "arn:aws:sns:eu-west-1:519388350760:awssetup-dub-sns-orgalerts"
+sns_arn         = "arn:aws:sns:eu-west-1:519388350760:awsenv-dub-sns-orgalerts"
 discord_channel = "testingstuff"
