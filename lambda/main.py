@@ -85,7 +85,8 @@ def aws_send_sns_message(
 
 def lambda_handler(event, context):  # pylint: disable=W0613
     """Lambda handler function."""
-    loto_data = fetch_loto_numbers(datetime.today().strftime("%d-%m-%Y"))
+    datetouse = os.environ.get("DATE_TO_USE", datetime.today().strftime("%d-%m-%Y"))
+    loto_data = fetch_loto_numbers(datetouse)
     loto_results = []
 
     aws_region = os.environ.get("AWS_REGION", boto3.session.Session().region_name)
