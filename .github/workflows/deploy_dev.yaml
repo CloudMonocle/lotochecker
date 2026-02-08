@@ -191,17 +191,17 @@ jobs:
       name: development-deploy
     steps:
       - name: AWS login main account
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6.0.0
         with:
           role-to-assume: arn:aws:iam::${{ vars.MAIN_AWS_ACCOUNT_ID }}:role/${{ vars.MAIN_AWS_ROLE }}
-          role-session-name: ${{ github.sha }}-main
+          role-session-name: ${{ github.sha }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Switch to Deploy Account
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v6.0.0
         with:
           role-to-assume: arn:aws:iam::${{ vars.DEPLOY_AWS_ACCOUNT_ID }}:role/${{ vars.DEPLOY_AWS_ROLE }}
-          role-session-name: ${{ github.sha }}-deploy
+          role-session-name: ${{ github.sha }}
           aws-region: ${{ env.AWS_REGION }}
           role-chaining: true
 
