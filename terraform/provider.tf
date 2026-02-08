@@ -8,6 +8,7 @@ provider "aws" {
     tags = {
       project     = local.project_name
       environment = var.environment
+      repo        = "CloudMonocle/lotochecker"
     }
   }
 }
