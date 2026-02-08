@@ -203,6 +203,7 @@ jobs:
           role-to-assume: arn:aws:iam::${{ vars.DEPLOY_AWS_ACCOUNT_ID }}:role/${{ vars.DEPLOY_AWS_ROLE }}
           role-session-name: ${{ github.sha }}-deploy
           aws-region: ${{ env.AWS_REGION }}
+          role-chaining: true
 
       - name: Trigger Lambda Test Event
         shell: bash
