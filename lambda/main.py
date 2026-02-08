@@ -17,11 +17,13 @@ def fetch_loto_numbers(today_date):
     url = "https://api-dfe.national-lottery.co.uk/draw-game/results/1"
     response = requests.get(url, timeout=10)
     json_data = response.json().get("drawResults", [])
+    logger.info("Fetched Loto numbers from API for date: %s", today_date)
     for draw in json_data:
         drawdate = datetime.strptime(
             draw.get("drawDate"), "%Y-%m-%dT%H:%M:%S.%fZ"
         ).strftime("%d-%m-%Y")
         if drawdate == today_date:
+            logger.info("Found draw for date: %s", today_date)
             dawn_numbers = draw.get("drawnNumbers").get("drawnNumbers")
             return {
                 "drawdate": drawdate,
